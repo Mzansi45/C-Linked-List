@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1642418710 source:c:\users\thulani\onedrive\documents\c++ functions\linked list\main.cpp
+	<iostream>
+	"structures.h"
+	"list.h"
+
+1642252131 c:\users\thulani\onedrive\documents\c++ functions\linked list\structures.h
+
+1642364990 c:\users\thulani\onedrive\documents\c++ functions\linked list\list.h
+	<iostream>
+	"Structures.h"
+	"list.imp"
+
+1642366678 c:\users\thulani\onedrive\documents\c++ functions\linked list\list.imp
+

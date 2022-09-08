@@ -1,0 +1,250 @@
+template<typename T>
+List<T>::List()
+{
+    length =0;
+    head = tail = nullptr;
+}
+
+template<typename T>
+List<T>::~List()
+{
+    DeleteList();
+}
+
+template<typename T>
+List<T>::List(const List<T>& other)
+{
+    CopyList(other);
+}
+
+template<typename T>
+List<T>& List<T>::operator = (const List<T>& Right)
+{
+    if(this !=Right)
+    {
+        DeleteList();
+        CopyList(Right);
+    }
+
+    return *this;
+}
+
+template<typename T>
+void List<T>::PrintList() const
+{
+    Node<T>* CurrentNode = head;
+    while(CurrentNode != nullptr)
+    {
+        cout << CurrentNode->data << " ";
+        CurrentNode = CurrentNode->next;
+    }
+    cout << endl;
+}
+
+template<typename T>
+void List<T>::AddAtEnd(T data)
+{
+    Node<T>* NewNode= new Node<T>;
+    NewNode->data = data;
+    NewNode->next  = nullptr;
+
+    if(head == nullptr)
+    {
+        head = tail = NewNode;
+    }
+    else
+    {
+        tail->next = NewNode;
+        tail = NewNode;
+    }
+
+    length++;
+}
+
+template<typename T>
+void List<T>::CopyList(const List<T>& other)
+{
+
+}
+
+template<typename T>
+void List<T>::DeleteList()
+{
+    Node<T>* CurrentNode = head;
+    while(CurrentNode != nullptr)
+    {
+        Node<T>* NodeToGo = CurrentNode;
+        CurrentNode = CurrentNode->next;
+        if(NodeToGo != nullptr)
+        {
+            delete NodeToGo;
+        }
+    }
+
+    length =0;
+    head = tail = nullptr;
+}
+
+template<typename T>
+void List<T>::IsListEmpty() const
+{
+    if(head == nullptr)
+    {
+        cout << "List is Empty" << endl;
+    }
+    else
+    {
+        cout << "List is Not Empty"<< endl;
+    }
+}
+
+template<typename T>
+void List<T>::AddAtBeginning(T data)
+{
+    Node<T>* NewNode = new Node<T>;
+    NewNode->key = length;
+    NewNode->data = data;
+
+    if(head == nullptr)
+    {
+        head = tail = NewNode;
+        tail->next = nullptr;
+    }
+    else
+    {
+        NewNode->next = head;
+        head = NewNode;
+    }
+    length++;
+}
+
+template <typename T>
+void List<T>::SearchList(T data) const
+{
+    int position=0;
+    bool found = false;
+    Node<T>* SearchNode = new Node<T>;
+    SearchNode = head;
+    while(SearchNode != nullptr)
+    {
+        if(SearchNode->data == data)
+        {
+            cout << SearchNode->data<<" found at position "<< position <<endl;
+            //cout << "key =" << SearchNode->key<< endl;
+            found = true;
+        }
+        SearchNode = SearchNode->next;
+        position++;
+    }
+
+    if(found == false)
+    {
+        cout << "No such data in list"<< endl;
+    }
+
+}
+
+template<typename T>
+void List<T>::RemoveAtEnd()
+{
+    if(head == nullptr)
+    {
+        cout << "List is empty"<< endl;
+    }
+
+    if(length ==1)
+    {
+        delete head;
+        tail = head = nullptr;
+    }
+    else
+    {
+        Node<T>* SecondLastNode = new Node<T>;
+        SecondLastNode = head;
+
+        while(SecondLastNode->next != tail)
+        {
+            SecondLastNode = SecondLastNode->next;
+        }
+        delete tail;
+        tail = SecondLastNode;
+        tail->next = nullptr;
+    }
+    length--;
+}
+
+template<typename T>
+void List<T>::RemoveAtBeginning()
+{
+    if(head != nullptr)
+    {
+        Node<T>* NodeToGo = new Node<T>;
+        NodeToGo = head;
+        head = head->next;
+        delete NodeToGo;
+    }
+    length--;
+}
+
+template<typename T>
+void List<T>::AddAfter(T nextto, T data)
+{
+    Node<T>* NewNode = new Node<T>;
+    NewNode->data = data;
+
+    Node<T>* CurrentNode = new Node<T>;
+    CurrentNode  = head;
+    while(CurrentNode != nullptr)
+    {
+        if(CurrentNode->data == nextto)
+        {
+            NewNode->next = CurrentNode->next;
+            CurrentNode->next = NewNode;
+        }
+        CurrentNode = CurrentNode->next;
+    }
+    length++;
+}
+
+template<typename T>
+void List<T>::RemoveItermAfter(T data)
+{
+    Node<T>* NodeToGo = new Node<T>;
+    Node<T>* CurrentNode = new Node<T>;
+    CurrentNode = head;
+
+    if(length ==0)
+    {
+        cout << "list is empty"<< endl;
+        return;
+    }
+    else if(length == 1)
+    {
+        cerr<< "Only one Iterm found and deleted"<< endl;
+        head = tail = nullptr;
+        delete head;
+        return;
+    }
+    bool found = false;
+
+    while(CurrentNode != nullptr)
+    {
+        if(CurrentNode->data == data)
+        {
+            found = true;
+            NodeToGo = CurrentNode->next;
+            CurrentNode->next = NodeToGo->next;
+
+            NodeToGo = nullptr;
+            delete NodeToGo;
+            break;
+        }
+        CurrentNode = CurrentNode->next;
+    }
+
+    if(found == false)
+    {
+        cerr << data <<" is Not in the list"<< endl;
+    }
+    length--;
+}
